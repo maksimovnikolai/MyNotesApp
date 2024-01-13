@@ -21,6 +21,7 @@ protocol MainViewPresenterProtocol: AnyObject {
     func changeTaskStatusForCompleted(_ indexPath: IndexPath, deselect: () -> Void, reload: () -> Void)
     func isCompleted(_ indexPath: IndexPath) -> Bool
     func changeTaskStatusForPlanned(_ indexPath: IndexPath, action: () -> Void)
+    func removeTask(at indexPath: IndexPath)
 }
 
 //MARK: - Class MainViewPresenter
@@ -124,5 +125,10 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         //  если задача имеет статус "выполнено", меняем на "запланирован"
         tasks[taskType]![indexPath.row].status = .planned
         action()
+    }
+    
+    func removeTask(at indexPath: IndexPath) {
+        let taskType = sectionsTypePosition[indexPath.section]
+        tasks[taskType]?.remove(at: indexPath.row)
     }
 }

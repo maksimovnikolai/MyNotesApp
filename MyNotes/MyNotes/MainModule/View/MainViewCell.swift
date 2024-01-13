@@ -7,18 +7,7 @@
 
 import UIKit
 
-protocol MainViewCellProtocol {
-    func update(_ task: TaskProtocol)
-}
-
-final class MainViewCell: UITableViewCell, MainViewCellProtocol {
-    
-    func update(_ task: TaskProtocol) {
-        titleLabel.text = task.title
-        getSymbolForTask(with: task.status)
-        setupColorForLabels(with: task.status)
-    }
-    
+final class MainViewCell: UITableViewCell {
     
     static let identifier = "MainViewCell"
     
@@ -38,7 +27,7 @@ final class MainViewCell: UITableViewCell, MainViewCellProtocol {
     }
     
     //MARK: Public method
-    func configure(task: TaskProtocol?) {
+    func configure(_ task: TaskProtocol?) {
         guard let task else { return }
         titleLabel.text = task.title
         getSymbolForTask(with: task.status)

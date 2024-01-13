@@ -15,7 +15,7 @@ final class MainViewController: UITableViewController {
     //MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
+        commonInit()
     }
 }
 
@@ -25,9 +25,18 @@ extension MainViewController: MainViewProtocol {}
 //MARK: - Private Methods
 extension MainViewController {
     
+    private func commonInit() {
+        setupTableView()
+        setupEditButton()
+    }
+    
     private func setupTableView() {
         tableView.register(MainViewCell.self, forCellReuseIdentifier: MainViewCell.identifier)
         tableView.rowHeight = 60
+    }
+    
+    private func setupEditButton() {
+        navigationItem.leftBarButtonItem = editButtonItem
     }
 }
 
@@ -49,7 +58,7 @@ extension MainViewController {
             return UITableViewCell()
         }
         
-        cell.configure(task: presenter.setCellTask(at: indexPath))
+        cell.configure(presenter.setCellTask(at: indexPath))
         return cell
     }
     
@@ -80,5 +89,10 @@ extension MainViewController {
             return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
         }
         return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        presenter.removeTask(at: indexPath)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 }
