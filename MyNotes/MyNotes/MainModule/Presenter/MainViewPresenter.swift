@@ -22,6 +22,7 @@ protocol MainViewPresenterProtocol: AnyObject {
     func isCompleted(_ indexPath: IndexPath) -> Bool
     func changeTaskStatusForPlanned(_ indexPath: IndexPath, action: () -> Void)
     func removeTask(at indexPath: IndexPath)
+    func move(at source: IndexPath, to destination: IndexPath)
 }
 
 //MARK: - Class MainViewPresenter
@@ -32,7 +33,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     private var router: RouterProtocol
     private var storage: TasksStorageProtocol
     
-    // коллекция задач
     private var tasks: [TaskPriority : [TaskProtocol]] = [:] {
         didSet {
             for (taskGroupPriority, taskGroup) in tasks {
@@ -44,8 +44,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
             }
         }
     }
-    
-    // порядок отображения секций по типам
     private var sectionsTypePosition: [TaskPriority] = [.important, .normal]
     private var tasksStatusPosition: [TaskStatus] = [.planned, .completed]
     
@@ -111,7 +109,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         reload()
     }
     
-    // Проверка, является ли задача выполненной или нет
     func isCompleted(_ indexPath: IndexPath) -> Bool {
         let taskType = sectionsTypePosition[indexPath.section]
         return tasks[taskType]![indexPath.row].status ==  .planned ? false : true
@@ -130,5 +127,18 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     func removeTask(at indexPath: IndexPath) {
         let taskType = sectionsTypePosition[indexPath.section]
         tasks[taskType]?.remove(at: indexPath.row)
+    }
+    
+    func move(at source: IndexPath, to destination: IndexPath) {
+        let taskTypeFrom = sectionsTypePosition[source.section]
+        let taskTypeTo = sectionsTypePosition[destination.section]
+        guard let movedTask = tasks[taskTypeFrom]?[source.row] else {
+            return
+        }
+        tasks[taskTypeFrom]?.remove(at: source.row)
+        tasks[taskTypeTo]?.insert(movedTask, at: destination.row)
+        if taskTypeFrom != taskTypeTo {
+            tasks[taskTypeTo]?[destination.row].type = taskTypeTo
+        }
     }
 }

@@ -65,6 +65,16 @@ extension MainViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         presenter.setupTitleForHeader(in: section)
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        presenter.removeTask(at: indexPath)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        presenter.move(at: sourceIndexPath, to: destinationIndexPath)
+        tableView.reloadData()
+    }
 }
 
 //MARK: - TableViewDelegate
@@ -89,10 +99,5 @@ extension MainViewController {
             return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
         }
         return nil
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        presenter.removeTask(at: indexPath)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 }
