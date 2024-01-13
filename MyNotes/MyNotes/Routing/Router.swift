@@ -32,4 +32,11 @@ final class Router: RouterProtocol {
             navigationController.viewControllers = [mainViewController]
         }
     }
+    
+    func getEditView() {
+        if let navigationController = navigationController {
+            guard let editController = assemblyBuilder?.createEditModule(router: self) else { return }
+            navigationController.pushViewController(editController, animated: true)
+        }
+    }
 }

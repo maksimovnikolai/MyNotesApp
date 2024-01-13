@@ -18,6 +18,8 @@
 		ADFC9DDF2B514C4000ABA9D3 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFC9DDE2B514C4000ABA9D3 /* Router.swift */; };
 		ADFC9DE22B51637F00ABA9D3 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFC9DE12B51637F00ABA9D3 /* StorageManager.swift */; };
 		ADFC9DE42B5166CD00ABA9D3 /* MainViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFC9DE32B5166CD00ABA9D3 /* MainViewCell.swift */; };
+		ADFC9DE92B52B4EF00ABA9D3 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFC9DE82B52B4EF00ABA9D3 /* EditViewController.swift */; };
+		ADFC9DEB2B52B55900ABA9D3 /* EditViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFC9DEA2B52B55900ABA9D3 /* EditViewPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		ADFC9DDE2B514C4000ABA9D3 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		ADFC9DE12B51637F00ABA9D3 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		ADFC9DE32B5166CD00ABA9D3 /* MainViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCell.swift; sourceTree = "<group>"; };
+		ADFC9DE82B52B4EF00ABA9D3 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		ADFC9DEA2B52B55900ABA9D3 /* EditViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,7 @@
 				ADFC9DD72B513EE000ABA9D3 /* AssemblyBuilder */,
 				ADFC9DE02B51636200ABA9D3 /* Services */,
 				ADFC9DD02B513DFA00ABA9D3 /* MainModule */,
+				ADFC9DE52B52B47C00ABA9D3 /* EditModule */,
 				ADFC9DCE2B51341900ABA9D3 /* Resources */,
 				ADFC9DCF2B51350C00ABA9D3 /* SupprotingFiles */,
 			);
@@ -162,6 +167,31 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		ADFC9DE52B52B47C00ABA9D3 /* EditModule */ = {
+			isa = PBXGroup;
+			children = (
+				ADFC9DE72B52B4BC00ABA9D3 /* View */,
+				ADFC9DE62B52B4B400ABA9D3 /* Presenter */,
+			);
+			path = EditModule;
+			sourceTree = "<group>";
+		};
+		ADFC9DE62B52B4B400ABA9D3 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				ADFC9DEA2B52B55900ABA9D3 /* EditViewPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		ADFC9DE72B52B4BC00ABA9D3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ADFC9DE82B52B4EF00ABA9D3 /* EditViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -237,6 +267,8 @@
 				ADFC9DD52B513E8000ABA9D3 /* MainViewController.swift in Sources */,
 				ADFC9DBA2B51322700ABA9D3 /* AppDelegate.swift in Sources */,
 				ADFC9DDF2B514C4000ABA9D3 /* Router.swift in Sources */,
+				ADFC9DE92B52B4EF00ABA9D3 /* EditViewController.swift in Sources */,
+				ADFC9DEB2B52B55900ABA9D3 /* EditViewPresenter.swift in Sources */,
 				ADFC9DBC2B51322700ABA9D3 /* SceneDelegate.swift in Sources */,
 				ADFC9DDD2B514A8900ABA9D3 /* Task.swift in Sources */,
 				ADFC9DD92B513FE300ABA9D3 /* AssemblyBuilder.swift in Sources */,
