@@ -28,7 +28,7 @@ final class Router: RouterProtocol {
     
     func initialViewController() {
         if let navigationController = navigationController {
-            guard let mainViewController = assemblyBuilder?.createMainModule() else { return }
+            guard let mainViewController = assemblyBuilder?.createMainModule(router: self) else { return }
             navigationController.viewControllers = [mainViewController]
         }
     }
