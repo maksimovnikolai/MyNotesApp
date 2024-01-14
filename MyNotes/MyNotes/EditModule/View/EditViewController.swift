@@ -32,7 +32,13 @@ private extension EditViewController {
     }
     
     private func registerTableViewCell() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(TitleCell.self, forCellReuseIdentifier: TitleCell.identifier)
+        tableView.register(TypeCell.self, forCellReuseIdentifier: TypeCell.identifier)
+    }
+    
+    private func setup(identifier: String, indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+        return cell
     }
 }
 
@@ -44,8 +50,16 @@ extension EditViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
+        var cell = UITableViewCell()
+        switch indexPath.row {
+        case 0:
+            cell = setup(identifier: TitleCell.identifier, indexPath: indexPath)
+        case 1:
+            cell = setup(identifier: TypeCell.identifier, indexPath: indexPath)
+        default:
+            break
+        }
         return cell
     }
 }
