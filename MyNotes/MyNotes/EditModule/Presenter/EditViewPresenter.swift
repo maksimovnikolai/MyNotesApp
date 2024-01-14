@@ -17,6 +17,7 @@ protocol EditPresenterProtocol: AnyObject {
     
     init(view: EditViewControllerProtocol, router: RouterProtocol)
     func setTaskText() -> String
+    func setTypeText() -> String
 }
 
 //MARK: - Presenter
@@ -44,6 +45,10 @@ final class EditViewPresenter: EditPresenterProtocol {
     
     func setTaskText() -> String {
         taskText
+    }
+    
+    func setTypeText() -> String {
+        taskTitles[taskType] ?? ""
     }
     
 }
