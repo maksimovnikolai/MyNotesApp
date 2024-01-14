@@ -15,7 +15,6 @@ final class TitleCell: UITableViewCell {
     private let titleTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Введите задачу"
-        textField.borderStyle = .none
         textField.font = .systemFont(ofSize: 17)
         return textField
     }()
@@ -29,6 +28,11 @@ final class TitleCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: Public method
+    func configure(_ taskTitle: String) {
+        titleTextField.text = taskTitle
+    }
 }
 
 //MARK: Private methods
@@ -39,7 +43,7 @@ private extension TitleCell {
     }
     
     func setupTextFieldConstraints() {
-        addSubview(titleTextField)
+        contentView.addSubview(titleTextField)
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleTextField.centerYAnchor.constraint(equalTo: centerYAnchor),
