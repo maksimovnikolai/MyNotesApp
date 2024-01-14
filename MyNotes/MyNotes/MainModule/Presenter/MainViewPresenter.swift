@@ -8,7 +8,9 @@
 import Foundation
 
 //MARK: - MainViewProtocol
-protocol MainViewProtocol: AnyObject {}
+protocol MainViewProtocol: AnyObject {
+    func addButtonDidTap()
+}
 
 //MARK: - MainViewPresenterProtocol
 protocol MainViewPresenterProtocol: AnyObject {
@@ -23,10 +25,14 @@ protocol MainViewPresenterProtocol: AnyObject {
     func changeTaskStatusForPlanned(_ indexPath: IndexPath, action: () -> Void)
     func removeTask(at indexPath: IndexPath)
     func move(at source: IndexPath, to destination: IndexPath)
+    func showEditScene()
 }
 
 //MARK: - Class MainViewPresenter
 final class MainViewPresenter: MainViewPresenterProtocol {
+    
+  
+    
     
     //MARK: Private properties
     private weak var view: MainViewProtocol?
@@ -140,5 +146,9 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         if taskTypeFrom != taskTypeTo {
             tasks[taskTypeTo]?[destination.row].type = taskTypeTo
         }
+    }
+    
+    func showEditScene() {
+        router.getEditView()
     }
 }

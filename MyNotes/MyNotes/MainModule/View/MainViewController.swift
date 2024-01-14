@@ -20,14 +20,20 @@ final class MainViewController: UITableViewController {
 }
 
 //MARK: - MainViewProtocol
-extension MainViewController: MainViewProtocol {}
+extension MainViewController: MainViewProtocol {
+    
+    @objc
+    func addButtonDidTap() {
+        presenter.showEditScene()
+    }
+}
 
 //MARK: - Private Methods
 extension MainViewController {
     
     private func commonInit() {
         setupTableView()
-        setupEditButton()
+        setupBarButtons()
     }
     
     private func setupTableView() {
@@ -35,8 +41,9 @@ extension MainViewController {
         tableView.rowHeight = 60
     }
     
-    private func setupEditButton() {
+    private func setupBarButtons() {
         navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonDidTap))
     }
 }
 

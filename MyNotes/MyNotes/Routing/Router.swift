@@ -14,6 +14,7 @@ protocol RouterMainProtocol {
 
 protocol RouterProtocol: RouterMainProtocol {
     func initialViewController()
+    func getEditView()
 }
 
 final class Router: RouterProtocol {
