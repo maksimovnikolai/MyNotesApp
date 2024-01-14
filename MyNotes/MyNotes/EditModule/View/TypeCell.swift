@@ -12,9 +12,8 @@ final class TypeCell: UITableViewCell {
     static let identifier = "TypeCell"
     
     //MARK: Private properties
-    private lazy var currentTypeLabel = makeLabel(textAlignment: .left)
-    private lazy var chooseTypeLabel = makeLabel(textColor: .systemGray, textAlignment: .right)
-    
+    private lazy var currentTypeLabel = makeLabel(withTitle: "Тип задачи", textAlignment: .left)
+    private lazy var chooseTypeLabel = makeLabel(withTitle: "➤", textColor: .systemGray, textAlignment: .right)
     
     //MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -24,6 +23,12 @@ final class TypeCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    //MARK: Public method
+    func configure(_ taskType: String) {
+        chooseTypeLabel.text = "\(taskType) ➤"
     }
 }
 
@@ -35,9 +40,9 @@ private extension TypeCell {
         setupChooseTypeLabelConstraints()
     }
     
-    func makeLabel(textColor: UIColor? = .black, textAlignment: NSTextAlignment) -> UILabel {
+    func makeLabel(withTitle title: String, textColor: UIColor? = .black, textAlignment: NSTextAlignment) -> UILabel {
         let label = UILabel()
-        label.text = "label"
+        label.text = title
         label.textColor = textColor
         label.textAlignment = textAlignment
         
