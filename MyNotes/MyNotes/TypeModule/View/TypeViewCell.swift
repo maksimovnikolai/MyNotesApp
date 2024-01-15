@@ -9,12 +9,12 @@ import UIKit
 
 final class TypeViewCell: UITableViewCell {
     
+    //MARK: Identifier
     static let identifier = "TypeViewCell"
     
     //MARK: Private properties
     private lazy var typeTitleLAbel = makeLabel(withTitle: "Название типа", size: 17)
     private lazy var descriptionLabel = makeLabel(withTitle: "Описание типа", textColor: .systemGray, size: 13)
-    private lazy var verticalStackView = UIStackView()
     
     //MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -27,9 +27,9 @@ final class TypeViewCell: UITableViewCell {
     }
     
     //MARK: Public method
-    func setTitle(typeTitle: String, descriptionTitle: String) {
-        typeTitleLAbel.text = typeTitle
-        descriptionLabel.text = descriptionTitle
+    func setTitle(with value: (title: String, description: String)) {
+        typeTitleLAbel.text = value.title
+        descriptionLabel.text = value.description
     }
 }
 
@@ -37,34 +37,38 @@ final class TypeViewCell: UITableViewCell {
 private extension TypeViewCell {
     
     func commonInit() {
-        setupStackView()
-        setupVerticalStackViewConstraints()
+        setupTypeTitleLAbelConstraints()
+        setupDescriptionLabelConstraints()
     }
     
     func makeLabel(withTitle title: String, textColor: UIColor? = .black, size: CGFloat) -> UILabel {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         label.text = title
         label.textColor = textColor
         label.font = .systemFont(ofSize: size)
         return label
     }
     
-    func setupStackView() {
-        verticalStackView.axis = .vertical
-        verticalStackView.alignment = .leading
-        verticalStackView.distribution = .fillEqually
-        verticalStackView.addArrangedSubview(typeTitleLAbel)
-        verticalStackView.addArrangedSubview(descriptionLabel)
+    func setupTypeTitleLAbelConstraints() {
+        contentView.addSubview(typeTitleLAbel)
+        typeTitleLAbel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            typeTitleLAbel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            typeTitleLAbel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            typeTitleLAbel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+        ])
     }
     
-    func setupVerticalStackViewConstraints() {
-        addSubview(verticalStackView)
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+    func setupDescriptionLabelConstraints() {
+        contentView.addSubview(descriptionLabel)
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 2),
-            verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15),
-            verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2),
+            descriptionLabel.topAnchor.constraint(equalTo: typeTitleLAbel.bottomAnchor, constant: 5),
+            descriptionLabel.leadingAnchor.constraint(equalTo: typeTitleLAbel.leadingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: typeTitleLAbel.trailingAnchor),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
         ])
     }
 }
