@@ -14,7 +14,8 @@ protocol RouterMainProtocol {
 
 protocol RouterProtocol: RouterMainProtocol {
     func initialViewController()
-    func getEditView()
+    func showEditView()
+    func showTypeView()
 }
 
 final class Router: RouterProtocol {
@@ -34,10 +35,17 @@ final class Router: RouterProtocol {
         }
     }
     
-    func getEditView() {
+    func showEditView() {
         if let navigationController = navigationController {
             guard let editController = assemblyBuilder?.createEditModule(router: self) else { return }
             navigationController.pushViewController(editController, animated: true)
+        }
+    }
+    
+    func showTypeView() {
+        if let navigationController = navigationController {
+            guard let typeController = assemblyBuilder?.createTypeModule(router: self) else { return }
+            navigationController.pushViewController(typeController, animated: true)
         }
     }
 }
