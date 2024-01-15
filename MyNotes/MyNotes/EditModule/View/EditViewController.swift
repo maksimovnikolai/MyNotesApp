@@ -37,6 +37,7 @@ private extension EditViewController {
     private func registerTableViewCell() {
         tableView.register(TitleCell.self, forCellReuseIdentifier: TitleCell.identifier)
         tableView.register(TypeCell.self, forCellReuseIdentifier: TypeCell.identifier)
+        tableView.register(SwitchCell.self, forCellReuseIdentifier: SwitchCell.identifier)
     }
 }
 
@@ -49,6 +50,7 @@ extension EditViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        // Временная реализация
         var returnedCell = UITableViewCell()
         switch indexPath.row {
         case 0:
@@ -60,7 +62,8 @@ extension EditViewController {
             cell.configure(presenter.setTypeText())
             returnedCell = cell
         default:
-            break
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchCell.identifier, for: indexPath) as? SwitchCell else { return returnedCell }
+            returnedCell = cell
         }
         return returnedCell
     }
