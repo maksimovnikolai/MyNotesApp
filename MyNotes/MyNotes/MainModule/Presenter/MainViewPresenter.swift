@@ -23,17 +23,14 @@ protocol MainViewPresenterProtocol: AnyObject {
     func changeTaskStatusForCompleted(_ indexPath: IndexPath, deselect: () -> Void, reload: () -> Void)
     func isCompleted(_ indexPath: IndexPath) -> Bool
     func changeTaskStatusForPlanned(_ indexPath: IndexPath, action: () -> Void)
-    func removeTask(at indexPath: IndexPath)
+    func removeTask(at: IndexPath)
     func move(at source: IndexPath, to destination: IndexPath)
     func showEditScene()
 }
 
-//MARK: - Class MainViewPresenter
+//MARK: - Presenter
 final class MainViewPresenter: MainViewPresenterProtocol {
-    
-  
-    
-    
+
     //MARK: Private properties
     private weak var view: MainViewProtocol?
     private var router: RouterProtocol
@@ -149,6 +146,6 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     }
     
     func showEditScene() {
-        router.getEditView()
+        router.showEditView()
     }
 }

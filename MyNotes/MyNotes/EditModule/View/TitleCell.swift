@@ -46,9 +46,10 @@ private extension TitleCell {
         contentView.addSubview(titleTextField)
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleTextField.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            titleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -2),
+            titleTextField.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            titleTextField.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            titleTextField.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+            titleTextField.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
         ])
     }
 }

@@ -22,6 +22,9 @@ final class EditViewController: UITableViewController {
 //MARK: - EditViewControllerProtocol
 extension EditViewController: EditViewControllerProtocol {
     
+    func updateView() {
+        tableView.reloadData()
+    }
 }
 
 //MARK: - Private methods
@@ -46,7 +49,6 @@ extension EditViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        //ОПТИМИЗИРОВАТЬ ЛОГИКУ ОБЪЯВЛЕНИЯ ЯЧЕЕК
         var returnedCell = UITableViewCell()
         switch indexPath.row {
         case 0:
@@ -61,5 +63,14 @@ extension EditViewController {
             break
         }
         return returnedCell
+    }
+}
+
+//MARK: - TableViewDelegate
+extension EditViewController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 1 {
+            presenter.showTypeView()
+        }
     }
 }

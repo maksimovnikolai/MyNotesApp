@@ -15,16 +15,12 @@ final class TypeViewController: UITableViewController {
     //MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         commonInit()
     }
 }
 
 //MARK: - TypeViewProtocol
-extension TypeViewController: TypeViewProtocol {
-    
-}
-
+extension TypeViewController: TypeViewProtocol {}
 
 //MARK: - Private methods
 extension TypeViewController {
@@ -50,11 +46,20 @@ extension TypeViewController {
             return UITableViewCell()
         }
         cell.setTitle(with: presenter.configureCell(at: indexPath))
+        
         if presenter.isSelected(at: indexPath) {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
         }
         return cell
+    }
+}
+
+//MARK: - TableViewDelegate
+extension TypeViewController {
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.popToEditView(indexPath)
     }
 }

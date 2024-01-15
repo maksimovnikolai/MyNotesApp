@@ -15,7 +15,8 @@ protocol RouterMainProtocol {
 protocol RouterProtocol: RouterMainProtocol {
     func initialViewController()
     func showEditView()
-    func showTypeView()
+    func showTypeView(with: TaskPriority)
+    func popToEditView(_ taskPriority: TaskPriority)
 }
 
 final class Router: RouterProtocol {
@@ -42,10 +43,19 @@ final class Router: RouterProtocol {
         }
     }
     
-    func showTypeView() {
+    func showTypeView(with priority: TaskPriority) {
         if let navigationController = navigationController {
-            guard let typeController = assemblyBuilder?.createTypeModule(router: self) else { return }
+            guard let typeController = assemblyBuilder?.createTypeModule(taskPriority: priority, router: self) else { return }
             navigationController.pushViewController(typeController, animated: true)
+        }
+    }
+    
+    func popToEditView(_ taskPriority: TaskPriority) {
+        navigationController?.viewControllers.forEach { viewController in
+            if let viewController = viewController as? EditViewController {
+                viewController.presenter.updateTaskType(taskPriority)
+                navigationController?.popToViewController(viewController, animated: true)
+            }
         }
     }
 }

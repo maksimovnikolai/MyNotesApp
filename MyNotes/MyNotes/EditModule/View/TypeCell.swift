@@ -50,11 +50,12 @@ private extension TypeCell {
     }
     
     func setupCurrentTypeLabelConstraints() {
-        addSubview(currentTypeLabel)
+        contentView.addSubview(currentTypeLabel)
         currentTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            currentTypeLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            currentTypeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            currentTypeLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            currentTypeLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            currentTypeLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
         ])
         currentTypeLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
@@ -65,7 +66,7 @@ private extension TypeCell {
         NSLayoutConstraint.activate([
             chooseTypeLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             chooseTypeLabel.leadingAnchor.constraint(equalTo: currentTypeLabel.trailingAnchor),
-            chooseTypeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            chooseTypeLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
         ])
     }
 }

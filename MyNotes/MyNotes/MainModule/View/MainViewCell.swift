@@ -16,7 +16,7 @@ final class MainViewCell: UITableViewCell {
     private lazy var titleLabel = makeLabel(withTitle: "Rigth")
     
     
-    //MARK: Initializer
+    //MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()

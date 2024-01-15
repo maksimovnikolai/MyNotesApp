@@ -9,7 +9,7 @@ import Foundation
 
 //MARK: - EditViewControllerProtocol
 protocol EditViewControllerProtocol: AnyObject {
-    
+    func updateView()
 }
 
 //MARK: - EditPresenterProtocol
@@ -18,15 +18,17 @@ protocol EditPresenterProtocol: AnyObject {
     init(view: EditViewControllerProtocol, router: RouterProtocol)
     func setTaskText() -> String
     func setTypeText() -> String
+    func showTypeView()
+    func updateTaskType(_: TaskPriority)
 }
 
 //MARK: - Presenter
 final class EditViewPresenter: EditPresenterProtocol {
  
+    //MARK: Private properties
     private weak var view: EditViewControllerProtocol?
     private var router: RouterProtocol
     
-    // параметры задачи
     private var taskText: String = ""
     private var taskType: TaskPriority = .normal
     private var taskStatus: TaskStatus = .planned
@@ -38,11 +40,14 @@ final class EditViewPresenter: EditPresenterProtocol {
     
     private var doAfterEdit: ((String, TaskPriority, TaskStatus) -> Void)?
     
+    //MARK: Init
     init(view: EditViewControllerProtocol, router: RouterProtocol) {
         self.view = view
         self.router = router
+        
     }
     
+    //MARK: Public methods
     func setTaskText() -> String {
         taskText
     }
@@ -51,4 +56,12 @@ final class EditViewPresenter: EditPresenterProtocol {
         taskTitles[taskType] ?? ""
     }
     
+    func showTypeView() {
+        router.showTypeView(with: taskType)
+    }
+    
+    func updateTaskType(_ taskType: TaskPriority) {
+        self.taskType = taskType
+        view?.updateView()
+    }
 }
