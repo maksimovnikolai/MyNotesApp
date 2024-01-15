@@ -20,6 +20,7 @@ protocol EditPresenterProtocol: AnyObject {
     func setTypeText() -> String
     func showTypeView()
     func updateTaskType(_: TaskPriority)
+    func isOn() -> Bool
 }
 
 //MARK: - Presenter
@@ -63,5 +64,9 @@ final class EditViewPresenter: EditPresenterProtocol {
     func updateTaskType(_ taskType: TaskPriority) {
         self.taskType = taskType
         view?.updateView()
+    }
+    
+    func isOn() -> Bool {
+        taskStatus == .completed ? true : false
     }
 }

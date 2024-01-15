@@ -14,13 +14,13 @@ final class SwitchCell: UITableViewCell {
     //MARK: Private properties
     private let typeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Type"
+        label.text = "Выполнена"
         return label
     }()
     
     private let typeSwitch: UISwitch = {
         let typeSwitch = UISwitch()
-        typeSwitch.isOn = true
+        
         return typeSwitch
     }()
     
@@ -32,6 +32,13 @@ final class SwitchCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: Public method
+    func configure(_ bool: Bool) {
+        if bool {
+            typeSwitch.isOn = true
+        }
     }
 }
 

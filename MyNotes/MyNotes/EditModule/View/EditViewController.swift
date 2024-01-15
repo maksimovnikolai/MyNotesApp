@@ -63,6 +63,7 @@ extension EditViewController {
             returnedCell = cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchCell.identifier, for: indexPath) as? SwitchCell else { return returnedCell }
+            cell.configure(presenter.isOn())
             returnedCell = cell
         }
         return returnedCell
