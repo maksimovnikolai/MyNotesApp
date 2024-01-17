@@ -8,7 +8,10 @@
 import Foundation
 
 //MARK: - TypeViewProtocol
-protocol TypeViewProtocol: AnyObject {}
+protocol TypeViewProtocol: AnyObject {
+    func registerTableViewCell()
+    func configureNavBar()
+}
 
 //MARK: - TypeViewPresenterProtocol
 protocol TypeViewPresenterProtocol: AnyObject {
@@ -25,7 +28,7 @@ final class TypeViewPresenter: TypeViewPresenterProtocol {
   
     typealias TypeCellDescription = (type: TaskPriority, title: String, description: String)
     
-    //MARK: Private porperties
+    //MARK: Private properties
     private weak var view: TypeViewProtocol?
     private var router: RouterProtocol
     

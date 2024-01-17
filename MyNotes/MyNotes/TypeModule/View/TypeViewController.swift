@@ -17,20 +17,21 @@ final class TypeViewController: UITableViewController {
         super.viewDidLoad()
         commonInit()
     }
+    
+    private func commonInit() {
+        registerTableViewCell()
+        configureNavBar()
+    }
 }
 
 //MARK: - TypeViewProtocol
-extension TypeViewController: TypeViewProtocol {}
-
-//MARK: - Private methods
-extension TypeViewController {
-    
-    private func commonInit() {
-        registerCell()
+extension TypeViewController: TypeViewProtocol {
+    func registerTableViewCell() {
+        tableView.register(TypeViewCell.self, forCellReuseIdentifier: TypeViewCell.identifier)
     }
     
-    private func registerCell() {
-        tableView.register(TypeViewCell.self, forCellReuseIdentifier: TypeViewCell.identifier)
+    func configureNavBar() {
+        navigationItem.title = "Status"
     }
 }
 
