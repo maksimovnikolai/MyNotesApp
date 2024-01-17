@@ -17,6 +17,7 @@ protocol RouterProtocol: RouterMainProtocol {
     func showEditView()
     func showTypeView(with: TaskPriority)
     func popToEditView(_ taskPriority: TaskPriority)
+    func popToMainView(task: Task)
 }
 
 final class Router: RouterProtocol {
@@ -54,6 +55,15 @@ final class Router: RouterProtocol {
         navigationController?.viewControllers.forEach { viewController in
             if let viewController = viewController as? EditViewController {
                 viewController.presenter.updateTaskType(taskPriority)
+                navigationController?.popToViewController(viewController, animated: true)
+            }
+        }
+    }
+    
+    func popToMainView(task: Task) {
+        navigationController?.viewControllers.forEach { viewController in
+            if let viewController = viewController as? MainViewController {
+                viewController.presenter.updateTasks(task)
                 navigationController?.popToViewController(viewController, animated: true)
             }
         }
