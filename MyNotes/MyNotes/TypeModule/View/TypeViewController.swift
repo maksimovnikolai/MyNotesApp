@@ -31,7 +31,8 @@ extension TypeViewController: TypeViewProtocol {
     }
     
     func configureNavBar() {
-        navigationItem.title = "Status"
+        navigationItem.title = "Статус"
+        navigationController?.navigationBar.topItem?.backButtonTitle = ""
     }
 }
 

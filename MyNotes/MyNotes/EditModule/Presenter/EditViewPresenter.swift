@@ -11,6 +11,7 @@ import Foundation
 protocol EditViewControllerProtocol: AnyObject {
     func updateView()
     func saveButtonDidTap()
+    func showAlert()
 }
 
 //MARK: - EditPresenterProtocol
@@ -22,10 +23,13 @@ protocol EditPresenterProtocol: AnyObject {
     func showTypeView()
     func updateTaskType(_: TaskPriority)
     func popToMainview()
+    func showAlert()
 }
 
 //MARK: - Presenter
 final class EditViewPresenter: EditPresenterProtocol {
+ 
+    
     
     //MARK: Public properties
     var taskTitle: String {
@@ -81,6 +85,10 @@ final class EditViewPresenter: EditPresenterProtocol {
     func updateTaskType(_ taskType: TaskPriority) {
         self.taskType = taskType
         view?.updateView()
+    }
+    
+    func showAlert() {
+        view?.showAlert()
     }
     
     func showTypeView() {

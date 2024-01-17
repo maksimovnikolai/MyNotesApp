@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TitleCellDelegate: AnyObject {
-    func getNewText(text: String)
+    func getNewText(_ titleCell: TitleCell, _ text: String)
 }
 
 final class TitleCell: UITableViewCell {
@@ -47,7 +47,7 @@ extension TitleCell: UITextFieldDelegate {
         guard let text = textField.text, !text.isEmpty else {
             return
         }
-        delegate.getNewText(text: text)
+        delegate.getNewText(self, text)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

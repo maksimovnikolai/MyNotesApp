@@ -21,15 +21,22 @@ final class EditViewController: UITableViewController {
 
 //MARK: - EditViewControllerProtocol
 extension EditViewController: EditViewControllerProtocol {
-    
+    func showAlert() {
+        let alert = UIAlertController(title: "Введите название заметки", message: nil, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default)
+        
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
+
     func makeSaveBurButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonDidTap))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(saveButtonDidTap))
     }
     
     @objc
     func saveButtonDidTap() {
         view.endEditing(true)
-        presenter.popToMainview()
+        presenter.taskTitle == "" ? presenter.showAlert() : presenter.popToMainview()
     }
     
     func updateView() {
@@ -40,14 +47,14 @@ extension EditViewController: EditViewControllerProtocol {
 //MARK: - TitleCellDelegate
 extension EditViewController: TitleCellDelegate {
     
-    func getNewText(text: String) {
-        presenter.taskTitle = text
+    func getNewText(_ titleCell: TitleCell, _ text: String) {
+        presenter.taskTitle =  text
     }
 }
 
 //MARK: - SwitchCellDelegate
 extension EditViewController: SwitchCellDelegate {
-    func updateTaskStatus(_ status: TaskStatus) {
+    func updateTaskStatus(_ switchCell: SwitchCell, _ status: TaskStatus) {
         presenter.status = status
     }
 }
@@ -61,8 +68,8 @@ private extension EditViewController {
     }
     
     private func setupNavBar() {
-        navigationItem.title = "New Note"
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Cancel"
+        navigationItem.title = "Новая заметка"
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Назад"
     }
     
     private func registerTableViewCell() {

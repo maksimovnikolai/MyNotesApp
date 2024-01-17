@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SwitchCellDelegate: AnyObject {
-    func updateTaskStatus(_ status: TaskStatus)
+    func updateTaskStatus(_ switchCell: SwitchCell, _ status: TaskStatus)
 }
 
 final class SwitchCell: UITableViewCell {
@@ -29,11 +29,7 @@ final class SwitchCell: UITableViewCell {
         return typeSwitch
     }()
     
-    private var currentStatus: TaskStatus = .planned {
-        didSet {
-            print(currentStatus)
-        }
-    }
+    private var currentStatus: TaskStatus = .planned
     
     //MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -68,7 +64,7 @@ private extension SwitchCell {
     @objc
     func changeStatus() {
         currentStatus = typeSwitch.isOn ? .completed : .planned
-        delegate?.updateTaskStatus(currentStatus)
+        delegate?.updateTaskStatus(self, currentStatus)
     }
     
     func setupTypeLabelConstraints() {
