@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol TitleCellDelegate: AnyObject {
+    func getNewText(text: String)
+}
+
 final class TitleCell: UITableViewCell {
     
     static let identifier = "TitleCell"
@@ -14,10 +18,12 @@ final class TitleCell: UITableViewCell {
     //MARK: Private properties
     private let titleTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Введите задачу"
+        textField.placeholder = "Введите название заметки"
         textField.font = .systemFont(ofSize: 17)
         return textField
     }()
+    
+    weak var delegate: TitleCellDelegate!
     
     //MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,10 +41,25 @@ final class TitleCell: UITableViewCell {
     }
 }
 
-//MARK: Private methods
-private extension TitleCell {
+//MARK: - UITextFieldDelegate
+extension TitleCell: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text, !text.isEmpty else {
+            return
+        }
+        delegate.getNewText(text: text)
+    }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+//MARK: - Private methods
+private extension TitleCell {
     func commonInit() {
+        titleTextField.delegate = self
         setupTextFieldConstraints()
     }
     

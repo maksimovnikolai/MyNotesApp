@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol SwitchCellDelegate: AnyObject {
+    func updateTaskStatus(_ status: TaskStatus)
+}
+
 final class SwitchCell: UITableViewCell {
     
     static let identifier = "SwitchCell"
+    
+    weak var delegate: SwitchCellDelegate?
     
     //MARK: Private properties
     private let typeLabel: UILabel = {
@@ -20,9 +26,14 @@ final class SwitchCell: UITableViewCell {
     
     private let typeSwitch: UISwitch = {
         let typeSwitch = UISwitch()
-        
         return typeSwitch
     }()
+    
+    private var currentStatus: TaskStatus = .planned {
+        didSet {
+            print(currentStatus)
+        }
+    }
     
     //MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,10 +46,9 @@ final class SwitchCell: UITableViewCell {
     }
     
     //MARK: Public method
-    func configure(_ bool: Bool) {
-        if bool {
-            typeSwitch.isOn = true
-        }
+    func configure(with status: TaskStatus) {
+        currentStatus = status
+        typeSwitch.isOn = status == .completed ? true : false
     }
 }
 
@@ -48,6 +58,17 @@ private extension SwitchCell {
     func commonInit() {
         setupTypeLabelConstraints()
         setupTypeSwitchConstraints()
+        setNewStatus()
+    }
+    
+    private func setNewStatus() {
+        typeSwitch.addTarget(self, action: #selector(changeStatus), for: .valueChanged)
+    }
+    
+    @objc
+    func changeStatus() {
+        currentStatus = typeSwitch.isOn ? .completed : .planned
+        delegate?.updateTaskStatus(currentStatus)
     }
     
     func setupTypeLabelConstraints() {

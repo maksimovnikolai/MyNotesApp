@@ -12,7 +12,7 @@ final class TypeCell: UITableViewCell {
     static let identifier = "TypeCell"
     
     //MARK: Private properties
-    private lazy var currentTypeLabel = makeLabel(withTitle: "Тип задачи", textAlignment: .left)
+    private lazy var currentTypeLabel = makeLabel(withTitle: "Тип заметки", textAlignment: .left)
     private lazy var chooseTypeLabel = makeLabel(withTitle: "➤", textColor: .systemGray, textAlignment: .right)
     
     //MARK: Init
@@ -34,7 +34,6 @@ final class TypeCell: UITableViewCell {
 
 //MARK: Private methods
 private extension TypeCell {
-    
     func commonInit() {
         setupCurrentTypeLabelConstraints()
         setupChooseTypeLabelConstraints()
@@ -45,7 +44,6 @@ private extension TypeCell {
         label.text = title
         label.textColor = textColor
         label.textAlignment = textAlignment
-        
         return label
     }
     
