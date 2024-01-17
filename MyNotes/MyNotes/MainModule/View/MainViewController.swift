@@ -22,6 +22,10 @@ final class MainViewController: UITableViewController {
 //MARK: - MainViewProtocol
 extension MainViewController: MainViewProtocol {
     
+    func updateUI() {
+        tableView.reloadData()
+    }
+    
     @objc
     func addButtonDidTap() {
         presenter.showEditScene()
@@ -33,7 +37,8 @@ extension MainViewController {
     
     private func commonInit() {
         setupTableView()
-        setupBarButtons()
+        configureNavigationBar()
+        setupBarButton()
     }
     
     private func setupTableView() {
@@ -41,7 +46,13 @@ extension MainViewController {
         tableView.rowHeight = 60
     }
     
-    private func setupBarButtons() {
+    private func configureNavigationBar() {
+        navigationItem.title = "My Notes"
+        navigationController?.navigationBar.tintColor = .brown
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func setupBarButton() {
         navigationItem.leftBarButtonItem = editButtonItem
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonDidTap))
     }

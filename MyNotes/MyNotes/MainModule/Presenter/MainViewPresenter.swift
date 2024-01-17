@@ -10,6 +10,7 @@ import Foundation
 //MARK: - MainViewProtocol
 protocol MainViewProtocol: AnyObject {
     func addButtonDidTap()
+    func updateUI()
 }
 
 //MARK: - MainViewPresenterProtocol
@@ -26,11 +27,12 @@ protocol MainViewPresenterProtocol: AnyObject {
     func removeTask(at: IndexPath)
     func move(at source: IndexPath, to destination: IndexPath)
     func showEditScene()
+    func updateTasks(_ newTask: Task)
 }
 
 //MARK: - Presenter
 final class MainViewPresenter: MainViewPresenterProtocol {
-
+    
     //MARK: Private properties
     private weak var view: MainViewProtocol?
     private var router: RouterProtocol
@@ -50,7 +52,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     private var sectionsTypePosition: [TaskPriority] = [.important, .normal]
     private var tasksStatusPosition: [TaskStatus] = [.planned, .completed]
     
-    //MARK: Initialization
+    //MARK: Init
     init(view: MainViewProtocol, router: RouterProtocol, storage: TasksStorageProtocol) {
         self.view = view
         self.router = router
@@ -60,12 +62,9 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     
     //MARK: Public Methods
     func loadTasks() {
-        // подготовка коллекции с задачами
-        // будем использовать только те задачи, для которых определена секция в таблице
         sectionsTypePosition.forEach {
             tasks[$0] = []
         }
-        
         // загрузка и разбор задач из хранилища
         storage.loadTasks().forEach {
             tasks[$0.type]?.append($0)
@@ -95,20 +94,17 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     }
     
     func changeTaskStatusForCompleted(_ indexPath: IndexPath, deselect: () -> Void, reload: () -> Void) {
-        // 1. Проверяем существование задачи
+       
         let taskType = sectionsTypePosition[indexPath.section]
         guard let _ = tasks[taskType]?[indexPath.row] else {
             return
         }
-        // 2. Убеждаемся что задача не является выполненной
+        
         guard tasks[taskType]![indexPath.row].status == .planned else {
-            // cнимаем выделение со строки
             deselect()
             return
         }
-        // 3. Отмечаем задачу как выполненную
         tasks[taskType]![indexPath.row].status = .completed
-        // 4. Перегружаем секцию таблицы
         reload()
     }
     
@@ -118,11 +114,9 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     }
     
     func changeTaskStatusForPlanned(_ indexPath: IndexPath, action: () -> Void) {
-        // получаем данные о задаче, которую необходимо перевести в статус "запланирован"
         let taskType = sectionsTypePosition[indexPath.section]
         guard let _ = tasks[taskType]?[indexPath.row] else { return }
-
-        //  если задача имеет статус "выполнено", меняем на "запланирован"
+    
         tasks[taskType]![indexPath.row].status = .planned
         action()
     }
@@ -147,5 +141,10 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     
     func showEditScene() {
         router.showEditView()
+    }
+    
+    func updateTasks(_ newTask: Task) {
+        tasks[newTask.type]?.append(newTask)
+        view?.updateUI()
     }
 }

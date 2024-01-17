@@ -12,9 +12,17 @@ final class MainViewCell: UITableViewCell {
     static let identifier = "MainViewCell"
     
     //MARK: Private properties
-    private lazy var symbolLabel = makeLabel(withTitle: "Left")
-    private lazy var titleLabel = makeLabel(withTitle: "Rigth")
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
     
+    private lazy var symbolImage: UIImageView = {
+        let image = UIImageView()
+        image.clipsToBounds = true
+        return image
+    }()
     
     //MARK: Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -39,52 +47,41 @@ final class MainViewCell: UITableViewCell {
 private extension MainViewCell {
     
     func commonInit() {
-        setupLeftLabelConstraints()
-        setupRightLabelConstraints()
-    }
-    
-    func makeLabel(withTitle title: String) -> UILabel {
-        let label = UILabel()
-        label.text = title
-        label.numberOfLines = 0
-        return label
+        setupImageConstraints()
+        setupLabelConstraints()
     }
     
     func getSymbolForTask(with status: TaskStatus) {
-        symbolLabel.text = status == .planned ? "\u{25CB}" : "\u{25C9}"
+        symbolImage.image = status == .planned ? UIImage(systemName: "circle") : UIImage(systemName: "checkmark.circle")
     }
     
     func setupColorForLabels(with status: TaskStatus) {
-        [titleLabel, symbolLabel].forEach {
-            $0.textColor = status == .planned ? .black : .lightGray
-        }
+        titleLabel.textColor = status == .planned ? .black : .lightGray
     }
 }
 
 //MARK: - Setup Constraints
 extension MainViewCell {
     
-    private func setupLeftLabelConstraints() {
-        contentView.addSubview(symbolLabel)
-        symbolLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func setupImageConstraints() {
+        contentView.addSubview(symbolImage)
+        symbolImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            symbolLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            symbolLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            symbolLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            symbolLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            symbolLabel.widthAnchor.constraint(equalToConstant: 20)
+            symbolImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            symbolImage.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            symbolImage.heightAnchor.constraint(equalToConstant: 20),
+            symbolImage.widthAnchor.constraint(equalToConstant: 20),
         ])
-        symbolLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
     
-    private func setupRightLabelConstraints() {
+    private func setupLabelConstraints() {
         contentView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: symbolLabel.trailingAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: symbolImage.trailingAnchor, constant: 10),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
