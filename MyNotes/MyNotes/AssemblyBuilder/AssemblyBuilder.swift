@@ -24,14 +24,14 @@ final class AssemblyBuilder: AssemblyBuilderProtocol {
     }
     
     func createEditModule(router: RouterProtocol) -> UIViewController {
-        let view = EditViewController(style: .insetGrouped)
+        let view = EditViewController(style: .grouped)
         let presenter = EditViewPresenter(view: view, router: router)
         view.presenter = presenter
         return view
     }
     
     func createTypeModule(taskPriority: TaskPriority, router: RouterProtocol) -> UIViewController {
-        let view = TypeViewController(style: .insetGrouped)
+        let view = TypeViewController(style: .grouped)
         let presenter = TypeViewPresenter(view: view, router: router, currentType: taskPriority)
         view.presenter = presenter
         return view

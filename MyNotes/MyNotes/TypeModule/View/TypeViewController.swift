@@ -32,7 +32,7 @@ extension TypeViewController: TypeViewProtocol {
     
     func configureNavBar() {
         navigationItem.title = "Статус"
-        navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Назад"
     }
 }
 

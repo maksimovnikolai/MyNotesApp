@@ -48,8 +48,6 @@ extension MainViewController {
     
     private func configureNavigationBar() {
         navigationItem.title = "Мои Заметки"
-        navigationController?.navigationBar.tintColor = .brown
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func setupBarButton() {
